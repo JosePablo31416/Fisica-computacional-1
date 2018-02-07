@@ -1,0 +1,765 @@
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Actividad II}
+    \author{José Pablo Montaño De la Ree}
+\date{Febrero 8,2018}
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} Cargar a la memoria de trabajo las bibliotecas: Pandas (manejo de datos, }
+        \PY{c+c1}{\PYZsh{} Numpy (numerical python) y la biblioteca de gráficas Matplotlib}
+        \PY{c+c1}{\PYZsh{} Se asignan nombres cortos.}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{c+c1}{\PYZsh{}}
+        \PY{c+c1}{\PYZsh{} Usar \PYZdq{}Shift+Enter\PYZdq{} para procesar la información de la celda}
+        \PY{c+c1}{\PYZsh{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Descarga los datos de una estación del Servicio Meteorológico Nacional}
+        \PY{c+c1}{\PYZsh{} http://smn1.conagua.gob.mx/emas/}
+        \PY{c+c1}{\PYZsh{} Lee un archivo de texto con la función Pandas \PYZdq{}read\PYZus{}csv\PYZdq{}, con elementos separados por mas de }
+        \PY{c+c1}{\PYZsh{} un espacio, brincándose 4 renglones del inicio (encabezados)}
+        \PY{n}{df0} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Iguala.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{skiprows}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{s+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} \PYZdq{}Shift + Enter\PYZdq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Lee los primeros 5 renglones del archivo}
+        \PY{n}{df0}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{165}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}Escribe el numero de datos en el parentesis que quieres leer en (), default 5}
+        \PY{c+c1}{\PYZsh{} \PYZdq{}Shift+Enter\PYZdq{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:}      DD/MM/AAAA  HH:MM   DIRS   DIRR  VELS  VELR  TEMP    HR     PB  PREC  \textbackslash{}
+        0    25/01/2018  23:00   18.0   10.0  3.44  12.5  32.6  22.0  927.2   0.0   
+        1    26/01/2018  00:00   13.0  333.0  2.55   9.7  28.2  29.0  927.5   0.0   
+        2    26/01/2018  01:00   86.0   76.0  6.85  11.4  26.2  30.0  927.7   0.0   
+        3    26/01/2018  02:00  180.0  117.0  2.14  14.3  25.3  33.0  928.8   0.0   
+        4    26/01/2018  03:00  176.0  173.0  6.46  18.3  25.8  33.0  930.1   0.0   
+        5    26/01/2018  04:00  180.0  187.0  7.28  17.7  25.6  33.0  931.1   0.0   
+        6    26/01/2018  05:00  199.0  210.0  6.70  17.2  24.5  36.0  931.3   0.0   
+        7    26/01/2018  06:00   92.0   62.0  3.41   9.7  23.4  38.0  931.4   0.0   
+        8    26/01/2018  07:00  147.0  189.0  2.94   9.1  22.5  41.0  931.3   0.0   
+        9    26/01/2018  08:00   45.0   50.0  2.01   6.2  20.9  46.0  931.0   0.0   
+        10   26/01/2018  09:00   51.0   53.0  2.39   7.9  19.7  48.0  930.6   0.0   
+        11   26/01/2018  10:00  185.0  229.0  0.46   4.5  18.3  54.0  930.6   0.0   
+        12   26/01/2018  11:00    0.0  225.0  0.00   3.3  17.2  59.0  930.7   0.0   
+        13   26/01/2018  12:00   99.0  131.0  1.23   6.2  16.4  67.0  931.1   0.0   
+        14   26/01/2018  13:00  178.0  165.0  1.66   7.9  16.7  66.0  931.7   0.0   
+        15   26/01/2018  14:00  171.0  233.0  2.73   7.9  18.1  60.0  932.4   0.0   
+        16   26/01/2018  15:00  246.0  249.0  4.44   8.5  21.9  46.0  932.9   0.0   
+        17   26/01/2018  16:00  297.0  347.0  4.70  10.8  27.4  33.0  932.8   0.0   
+        18   26/01/2018  17:00  282.0  316.0  4.82  14.3  30.4  27.0  932.1   0.0   
+        19   26/01/2018  18:00  266.0  227.0  2.80  17.2  31.1  25.0  930.8   0.0   
+        20   26/01/2018  19:00  247.0  148.0  7.04  17.2  32.0  24.0  929.2   0.0   
+        21   26/01/2018  20:00  266.0  296.0  2.30  14.9  32.7  23.0  927.7   0.0   
+        22   26/01/2018  21:00  300.0  311.0  6.12  14.3  33.8  21.0  926.5   0.0   
+        23   26/01/2018  22:00  322.0   11.0  3.98  13.1  33.4  22.0  925.7   0.0   
+        24   26/01/2018  23:00   33.0  336.0  4.07  13.1  31.7  24.0  925.5   0.0   
+        25   27/01/2018  00:00   34.0   46.0  0.89   7.4  28.4  31.0  925.7   0.0   
+        26   27/01/2018  01:00   72.0   87.0  5.91  10.8  26.4  33.0  926.1   0.0   
+        27   27/01/2018  02:00   92.0   58.0  4.39  13.7  25.4  34.0  926.8   0.0   
+        28   27/01/2018  03:00  127.0   53.0  2.99  16.0  24.2  40.0  927.3   0.0   
+        29   27/01/2018  04:00  211.0  144.0  0.02   7.9  21.7  47.0  927.7   0.0   
+        ..          {\ldots}    {\ldots}    {\ldots}    {\ldots}   {\ldots}   {\ldots}   {\ldots}   {\ldots}    {\ldots}   {\ldots}   
+        135  31/01/2018  14:00  141.0   85.0  0.69   6.2  15.0  51.0  933.2   0.0   
+        136  31/01/2018  15:00  262.0  245.0  3.25   9.1  18.4  40.0  933.7   0.0   
+        137  31/01/2018  16:00  344.0  346.0  4.74  10.8  22.8  30.0  933.8   0.0   
+        138  31/01/2018  17:00  326.0  133.0  3.03  11.4  25.5  25.0  933.1   0.0   
+        139  31/01/2018  18:00  343.0  356.0  5.31  12.5  26.0  24.0  931.7   0.0   
+        140  31/01/2018  19:00   51.0  321.0  3.70  12.5  26.5  24.0  930.1   0.0   
+        141  31/01/2018  20:00  337.0  313.0  3.75  10.2  26.7  24.0  928.5   0.0   
+        142  31/01/2018  21:00  322.0  310.0  2.21   7.9  27.0  24.0  927.8   0.0   
+        143  31/01/2018  22:00   33.0  354.0  2.92   7.9  26.6  25.0  927.7   0.0   
+        144  31/01/2018  23:00   39.0  342.0  1.80   6.8  26.3  27.0  927.5   0.0   
+        145  02/01/2018  00:00   88.0   92.0  0.93   4.5  22.7  38.0  928.0   0.0   
+        146  02/01/2018  01:00   88.0   78.0  3.44   8.5  21.1  37.0  928.4   0.0   
+        147  02/01/2018  02:00    0.0  186.0  0.00   2.8  18.8  47.0  928.9   0.0   
+        148  02/01/2018  03:00  113.0   51.0  1.19   6.2  17.5  50.0  929.6   0.0   
+        149  02/01/2018  04:00  152.0  147.0  0.53   5.1  16.8  52.0  930.3   0.0   
+        150  02/01/2018  05:00  172.0  118.0  0.08   5.1  16.0  56.0  930.8   0.0   
+        151  02/01/2018  06:00   54.0   93.0  1.94   8.5  15.6  54.0  930.8   0.0   
+        152  02/01/2018  07:00  163.0  142.0  2.32   9.1  15.7  56.0  930.7   0.0   
+        153  02/01/2018  08:00  101.0  147.0  1.94   5.6  15.0  60.0  930.6   0.0   
+        154  02/01/2018  09:00   52.0   85.0  1.08   5.6  14.1  63.0  930.3   0.0   
+        155  02/01/2018  10:00  178.0   98.0  0.42   2.8  13.5  63.0  930.4   0.0   
+        156  02/01/2018  11:00  140.0  168.0  1.89   6.8  12.8  68.0  930.6   0.0   
+        157  02/01/2018  12:00  158.0  147.0  0.32   3.9  12.7  69.0  930.9   0.0   
+        158  02/01/2018  13:00  174.0  151.0  1.36   5.1  12.3  72.0  931.6   0.0   
+        159  02/01/2018  14:00  195.0  189.0  2.99   6.2  15.2  58.0  932.3   0.0   
+        160  02/01/2018  15:00    0.0  181.0  0.00   3.9  18.5  46.0  932.6   0.0   
+        161  02/01/2018  16:00  193.0  141.0  0.97   7.9  24.5  32.0  932.5   0.0   
+        162  02/01/2018  17:00  316.0  258.0  3.55   9.7  27.7  26.0  931.7   0.0   
+        163  02/01/2018  18:00  326.0  317.0  2.11  10.8  30.6  22.0  930.4   0.0   
+        164  02/01/2018  19:00  346.0  328.0  5.80  13.7  32.3  20.0  929.2   0.0   
+        
+             RADSOL  
+        0     181.7  
+        1       8.5  
+        2       0.0  
+        3       0.0  
+        4       0.0  
+        5       0.0  
+        6       0.0  
+        7       0.0  
+        8       0.0  
+        9       0.0  
+        10      0.0  
+        11      0.0  
+        12      0.0  
+        13      0.0  
+        14     10.7  
+        15     77.8  
+        16    140.5  
+        17    567.2  
+        18    667.8  
+        19    654.8  
+        20    689.3  
+        21    541.0  
+        22    604.0  
+        23    339.0  
+        24    106.3  
+        25      8.0  
+        26      0.0  
+        27      0.0  
+        28      0.0  
+        29      0.0  
+        ..      {\ldots}  
+        135    73.8  
+        136   184.8  
+        137   477.3  
+        138   670.7  
+        139   417.2  
+        140   384.2  
+        141   272.7  
+        142   235.8  
+        143   162.3  
+        144    88.5  
+        145     9.0  
+        146     0.0  
+        147     0.0  
+        148     0.0  
+        149     0.0  
+        150     0.0  
+        151     0.0  
+        152     0.0  
+        153     0.0  
+        154     0.0  
+        155     0.0  
+        156     0.0  
+        157     0.0  
+        158    15.0  
+        159    64.3  
+        160   124.0  
+        161   523.2  
+        162   591.5  
+        163   706.8  
+        164   694.3  
+        
+        [165 rows x 11 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Dar estructura de datos (DataFrame)}
+        \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{df0}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} Combinar las columnas \PYZdq{}DD/MM/AAAA\PYZdq{} con \PYZdq{}HH:MM\PYZdq{} y convertirla a variable de tiempo}
+        \PY{c+c1}{\PYZsh{} Se crea una nueva columna \PYZdq{}Fecha\PYZdq{} al final con formato de tiempo.}
+        \PY{c+c1}{\PYZsh{} Eliminamos las dos primeras columnas que ya no necesitaremos}
+        \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{FECHA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DD/MM/AAAA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HH:MM}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DD/MM/AAAA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HH:MM}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{24}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:}      DIRS   DIRR  VELS  VELR  TEMP    HR     PB  PREC  RADSOL  \textbackslash{}
+        0    18.0   10.0  3.44  12.5  32.6  22.0  927.2   0.0   181.7   
+        1    13.0  333.0  2.55   9.7  28.2  29.0  927.5   0.0     8.5   
+        2    86.0   76.0  6.85  11.4  26.2  30.0  927.7   0.0     0.0   
+        3   180.0  117.0  2.14  14.3  25.3  33.0  928.8   0.0     0.0   
+        4   176.0  173.0  6.46  18.3  25.8  33.0  930.1   0.0     0.0   
+        5   180.0  187.0  7.28  17.7  25.6  33.0  931.1   0.0     0.0   
+        6   199.0  210.0  6.70  17.2  24.5  36.0  931.3   0.0     0.0   
+        7    92.0   62.0  3.41   9.7  23.4  38.0  931.4   0.0     0.0   
+        8   147.0  189.0  2.94   9.1  22.5  41.0  931.3   0.0     0.0   
+        9    45.0   50.0  2.01   6.2  20.9  46.0  931.0   0.0     0.0   
+        10   51.0   53.0  2.39   7.9  19.7  48.0  930.6   0.0     0.0   
+        11  185.0  229.0  0.46   4.5  18.3  54.0  930.6   0.0     0.0   
+        12    0.0  225.0  0.00   3.3  17.2  59.0  930.7   0.0     0.0   
+        13   99.0  131.0  1.23   6.2  16.4  67.0  931.1   0.0     0.0   
+        14  178.0  165.0  1.66   7.9  16.7  66.0  931.7   0.0    10.7   
+        15  171.0  233.0  2.73   7.9  18.1  60.0  932.4   0.0    77.8   
+        16  246.0  249.0  4.44   8.5  21.9  46.0  932.9   0.0   140.5   
+        17  297.0  347.0  4.70  10.8  27.4  33.0  932.8   0.0   567.2   
+        18  282.0  316.0  4.82  14.3  30.4  27.0  932.1   0.0   667.8   
+        19  266.0  227.0  2.80  17.2  31.1  25.0  930.8   0.0   654.8   
+        20  247.0  148.0  7.04  17.2  32.0  24.0  929.2   0.0   689.3   
+        21  266.0  296.0  2.30  14.9  32.7  23.0  927.7   0.0   541.0   
+        22  300.0  311.0  6.12  14.3  33.8  21.0  926.5   0.0   604.0   
+        23  322.0   11.0  3.98  13.1  33.4  22.0  925.7   0.0   339.0   
+        
+                         FECHA  
+        0  2018-01-25 23:00:00  
+        1  2018-01-26 00:00:00  
+        2  2018-01-26 01:00:00  
+        3  2018-01-26 02:00:00  
+        4  2018-01-26 03:00:00  
+        5  2018-01-26 04:00:00  
+        6  2018-01-26 05:00:00  
+        7  2018-01-26 06:00:00  
+        8  2018-01-26 07:00:00  
+        9  2018-01-26 08:00:00  
+        10 2018-01-26 09:00:00  
+        11 2018-01-26 10:00:00  
+        12 2018-01-26 11:00:00  
+        13 2018-01-26 12:00:00  
+        14 2018-01-26 13:00:00  
+        15 2018-01-26 14:00:00  
+        16 2018-01-26 15:00:00  
+        17 2018-01-26 16:00:00  
+        18 2018-01-26 17:00:00  
+        19 2018-01-26 18:00:00  
+        20 2018-01-26 19:00:00  
+        21 2018-01-26 20:00:00  
+        22 2018-01-26 21:00:00  
+        23 2018-01-26 22:00:00  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot\PYZus{}date}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{FECHA}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{VELS}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Velocidad del viento}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Velocidad del viento respecto al tiempo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot\PYZus{}date}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{FECHA}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{VELR}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Velocidad de Rafagas de viento}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Velocidad de rafagas viento respecto al tiempo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot\PYZus{}date}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{FECHA}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{DIRS}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Direccion del viento respecto al tiempo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Direccion del viento en grados}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot\PYZus{}date}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{FECHA}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{RADSOL}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Radiacion Solar}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Radiacion solar VS Tiempo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{df}\PY{o}{.}\PY{n}{TEMP}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} 34.200000000000003
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{df}\PY{o}{.}\PY{n}{TEMP}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} 12.300000000000001
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} Gráfica de Temperatura y Humedad Relativa}
+         \PY{n}{df1} \PY{o}{=} \PY{n}{df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TEMP}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HR}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}\PY{p}{;} \PY{n}{df1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{)}\PY{p}{;} \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{best}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Variación de la Temperatura y la Humedad Relativa}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Temp ºC /(}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{) HR}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<matplotlib.figure.Figure at 0x7f024cd62390>
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} Realiza un análisis exploratorio de datos}
+         \PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:}              DIRS        DIRR        VELS        VELR        TEMP          HR  \textbackslash{}
+         count  167.000000  167.000000  167.000000  167.000000  166.000000  166.000000   
+         mean   163.233533  171.044611    3.733353   10.792814   23.336145   37.355422   
+         std     93.837398   94.687080    3.539768    5.520799    5.719495   14.511861   
+         min      0.000000    2.450000    0.000000    0.000000   12.300000   15.000000   
+         25\%     91.500000   86.500000    1.665000    6.800000   18.525000   25.000000   
+         50\%    158.000000  166.000000    3.030000    9.700000   23.400000   33.000000   
+         75\%    217.000000  221.000000    5.150000   14.000000   27.375000   47.750000   
+         max    349.000000  356.000000   34.100000   27.500000   34.200000   72.000000   
+         
+                        PB   PREC      RADSOL  
+         count  166.000000  166.0  166.000000  
+         mean   929.472892    0.0  145.753012  
+         std      2.568183    0.0  226.641958  
+         min    923.400000    0.0    0.000000  
+         25\%    927.700000    0.0    0.000000  
+         50\%    929.550000    0.0    0.000000  
+         75\%    931.475000    0.0  213.675000  
+         max    934.800000    0.0  738.700000  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot\PYZus{}date}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{FECHA}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{VELS}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot\PYZus{}date}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{FECHA}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{VELR}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{VELS y VELR VS Tiempo }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{VELS Azul y VELR Rojo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+     \section{Preguntas y Respuestas}
+     
+     Crear una gráfica que muestre la rapidez de los vientos y la rapidez de las ráfagas, como funciones del tiempo. ¿Cuáles son las horas del día con más viento?.
+     \linebreak
+     
+     Entre las 7 y las 9 de la mañana, toamdo como referencia la hora de iguala.
+     \linebreak
+Crear una gráfica con la dirección de los vientos como función del tiempo y comentar sobre los vientos dominantes en el sitio de estudio.
+\linebreak
+
+Entre 300 y 350 grados es la direccion de los vientos normalmente.
+\linebreak
+
+Muestre el comportamiento de la Radiación Solar como función del tiempo. ¿Que puedes comentar? 
+\linebreak
+Se comporta de una forma sinoildal.
+\linebreak
+
+¿Cuál es el lapso de temperatura diaria? (Diferencia entre la temperatura máxima y la mínima).
+\linebreak
+Entre 34,2 grados y 12 grados.
+\linebreak
+
+¿Puedes comentar sobre la relación entre la temperatura y la humedad relativa?
+\linebreak
+Se comportan como ondas perfectamente desfazadas, de manera que serian ondas destructivas. Donde la humedad tiene una amplitud de onda menor.
+\linebreak
+    
+    \section{Introduccion}
+
+En esta actividad se nos mostro como utilizar Jupyter, el cual es un espacio de programacion que te permite prosesar datos. Aunque, más que eso, lo definiria como un espacio para comandar y procesar informacion. En las secciones a futuro, mostrare los comandos aprendidos, como funcionan y las proesas de estos en diferentes hambitos.
+
+\section{Prosesamiento de datos crudos.}
+
+Jupyter, te permite leer y procesar  grandes cantidades de informacion en periodos de tiempo muy cortos. Lo unico que se necesita hacer es tener esta informacion en un arcgivo txt dentro del folder que se esta trabajando. Para leer esa informacion se utiliza el comando siguiente: 
+\begin{verbatim}
+df0 = pd.read_csv('Nombre.txt',  skiprows=filas a brincar,  sep='\s+')
+\end{verbatim}
+Donde en nombre, se escribe el nombre del documento y en filas a brincar se escribe el numero de filas que deseas que no sean leidas.
+\linebreak
+
+Para mostrar los datos leidos, se utiliza el comando que se muestra a continuacion.
+\begin{verbatim}
+df0.head(numero de datos)
+\end{verbatim}
+Donde se escribe en el espacio entre llaves el numero de datos que deseas sean desplegados.
+\linebreak
+
+Tambien, es posible cambiar las categorias que leyo jupiter e incluos convinar algunas, como se muestra en el siguiente ejemplo, en el cual se convinan dia, mes y hora en una sola categoria llamada fecha.
+
+\begin{verbatim}
+df['FECHA'] = pd.to_datetime(df.apply(lambda x: x['DD/MM/AAAA'] + ' ' + x['HH:MM'], 1), 
+dayfirst=True) df = df.drop(['DD/MM/AAAA', 'HH:MM'], 1)
+
+\end{verbatim}
+
+Estas funciones para procesar datos crudos son muy utiles, ya que no requieren una alta cantidad de instrucciones para leer los datos y mostrarlos a diferencia de fortran.
+
+\section{Graficas}
+
+Jupiter, tiene la gracia de graficar los datos procesados dentro de si mismo de una manera muy conveninete para el usuario donde se utiliza el siguiente formato. 
+
+\begin{verbatim}
+plt.plot_date(x=df."ejex", y=df."eje y", fmt="b-")
+plt.title("Titulo de la grafica")
+plt.ylabel("titulo del eje Y")
+plt.xlabel("titulo del eje x")
+plt.grid(True)
+plt.show()
+\end{verbatim}
+
+Para realizar la grafica, es necesario colocar el nombre con el que leyo la columna de datos en "ejex" para graficar los datos de x en contra de los datos de y qe se leen colocando el nombre que leyo jupiter en "ejey" 
+
+\section{Apendice}
+
+
+    ¿Cuál es tu primera impresión de Jupyter Notebook?
+    \linebreak
+    Me parecio muy util para procesar informacion y graficarla rapidamente. Aunque no me gusto el tamaño de las graficas.
+    \linebreak
+    
+    ¿Se te dificultó leer código en Python?
+    \linebreak
+    Un poco, aunque el estar familiarizado con el ingles ayudo, la forma de darle instrucciones a python me sigue siendo algo extraña.
+    
+    ¿En base a tu experiencia de programación en Fortran, que te parece el entorno de trabajar en Python?
+    \linebreak
+    Considero que si tuviera que elegir entre hacer esta actividad en fortran o en python, elegiria python ya que este ya esta condicionado para estas actividades, mientras que a fortran lo tendria que condicionar.
+    \linebreak
+    
+    A diferencia de Fortran, ahora se producen las gráficas utilizando la biblioteca Matplotlib. ¿Cómo fue tu experiencia?. 
+    \linebreak
+    Las graficas eran algo pequeñas para mi gusto, pero mucho más faciles de hacer.
+    \linebreak
+    
+    En general, ¿qué te pereció el entorno de trabajo en Python? 
+    \linebreak
+    Como un entorno que promete ser muy amigable y util una vez que aprenda a hablar con python.
+    \linebreak
+    ¿Qué opinas de la actividad? ¿Estuvo compleja? ¿Mucho material nuevo? ¿Que le faltó o que le sobró? ¿Qué modificarías para mejorar? 
+    \linebreak
+    Me hubiese gustado una referencia donde se pudiera encontrar de forma facil los comandos más comunes de Jupiter y phyton. Tambien considero que el ejempo dado fue magnifico.
+    ¿Comentarios adicionales que desees compartir? 
+    Creo que me hace falta familiarizarme más con pyton y jupyter.
+
+    
+    \end{document}

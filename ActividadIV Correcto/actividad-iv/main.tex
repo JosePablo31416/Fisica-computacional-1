@@ -1,0 +1,665 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Actividad IV}
+\author{Jose Pablo Montaño De la Ree}
+\date{Febrero 21,2018}
+
+\begin{document}
+\maketitle
+
+
+\section{Introducion}
+
+Normalmente, para descargar informacion a la computadora, vamos a la fuente y manualmente sellecionamos la informacion que deseamos para obtener dicha informacion. Sin embargo es posible indicarle a la computadora como hacer este proceso multiples veces para nosotors ahorrandonos asi algo de tiempo.
+
+\section{Script inicial}
+
+Se descargo un archivo llamado script1.sh que estava diseñado para descargar los datos de todo el 2017 recopilados por las sondas de Wyoming. A este escript se le daba el numero de estacion y este descargaba la informacion de cada mes de esa estacion.
+
+
+
+\section{Terminal}
+
+Se abrio una terminal dentro de la carpeta que contenia el script y se utilizo el comando ls -alg lo cual nos permitio ver los permisos del archivo. Estos eran -rw-r--r-- donde las r son read y las w de write. Despues utilizamos el comando chmod 644 script1.sh para devolver los permisos de lecturas y escritura. Despues ejecutamos el archivo y se descargaron los 12 meses de informacion. 
+\linebreak 
+
+Despues de esto utilizamos el comando ls -alg para visualizar los nuevos archivos guardados en nuestra carpeta por el programa recien ejecutado. Despue sutilizamos el comando less para explorar algunos archivos y leerlos. 
+\linebreak 
+Un comando que resulto extremadamente interesante para mi fue el comnado cat el cual no solo te permite ver un archivo, sino te permite unir varios archivos en uno solo y nombrarlo, como se hizo en este caso con los 12 archivos de informacion. Usando 
+\begin{verbatim}
+cat sounding* > Sondeos.txt
+\end{verbatim}
+ Despues de esto, se uso el comando grep para filtrar la informacion del recien creado archivo. Para finalizar se nos pidio modificar nuestro archivo usando 
+\begin{verbatim}
+egrep -v 'PRES|hPa' sondeos.txt | egrep '#de estacion
+|Showalter|LIFT|SWEAT|K|Totals|CAPE|CINS|LFCT|CAPV|Temp|
+Pres|thick|Precip' > df2017.csv
+\end{verbatim}
+\section{Automatizacion}
+Despues, se nos pidio automatizar el proceso de unir los archivos y modificarlos como se hizo anteriormente. Para esto solo hubo que escribir en Emacs 
+\begin{verbatim}
+#!bin/bash
+cat sounding* > Sondeos.txt
+egrep -v 'PRES|hPa' sondeos.txt | egrep '#de estacion
+|Showalter|LIFT|SWEAT|K|Totals|CAPE|CINS|LFCT|CAPV|Temp|
+Pres|thick|Precip' > df2017_2.csv
+
+\end{verbatim}
+
+y guardarlo como un script llamado filtro.sh que creo un archivo que al compararlo contra el archivo creado sin automatizacion, notamos que no habia diferencia. Para esto utilizamos en la terminarl el comando dif. 
+
+\section{Comandos}
+
+    cat: Ver el contenido de archivos.
+    chmod: Camniar modo, te permite dal los permisos que se requieren para ejecutar un script
+    echo: Te permite escribir en la terminal.
+    grep: Te permite buscar una palabra o palabras en un archivo o grupos d archivos.
+    less :Se utiliza para leer más facilmente cuando el monitor es sobre cargado con una salida. 
+    ls: Enlista los archivos dentro de una carpeta. 
+    wc: Permite contar lineas, caracteres etc.
+    Redirectores: |, >Permite contar lineas, caracteres etc.
+
+
+\section{Shell Tutorial}
+
+\subsection{1.Introduccion}
+
+El tutorial estudiado es el de Bourne Shell hecho por Steve Bourne y presentado en la septima edicion de Bell labs.
+
+\subsection{2. Filosofia}
+
+La claridad en la programacion es importante, ya que esto es lo que diferencia un buen programa y la magia negra.
+
+\subsection{3 A first Script}
+ Para escribir un codigo script debe iniciarse con
+\begin{verbatim}
+#!/bin/bash y como el simbolo # es usado para comentarios.
+\end{verbatim}
+
+Inicia proponiendo una practica con el comando "echo" para imprimir palabras o frases dentro de la terminal. Para probar el comando se uso el script siguiente.
+
+
+
+
+
+Despues, se utilizo el comando chmod 755 para dar los permisos correctos y se corrio el script.
+\begin{verbatim}
+#!/bin/bash
+#EJ. Echo1
+echo Hola mundo
+\end{verbatim}
+
+Termianl
+
+\begin{verbatim}
+Wolverine@ltsp22:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ chmod 755 P1.sh
+Wolverine@ltsp22:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Hola mundo
+\end{verbatim}
+
+Como podemos ver se escribio todo extactamente como se le dijo a la terminal. El comando echo agrega un espacio entre palabra y palabra solamente, de manera de que si le doy la intruccion (Hola      Mundo) la terminal la escribira como Hola mundo ya que solo da un espacio, sin embarfo si le doy la instruccion 'Hola		Mundo' lo escribira como tal como se muestra a continuacion. 
+
+
+\begin{verbatim}
+#!/bin/bash
+#EJ. Echo2
+echo 'Hola		 mundo'
+\end{verbatim}
+La terminal respondio de la siguiente manera. 
+\begin{verbatim}
+Wolverine@ltsp41:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Hola		 mundo
+
+\end{verbatim}
+
+\subsection{4.Variables}
+
+Las variables como en cualquier hambiente de programacion, te permiten asignar alguna pieza de informacion a un espacio de memoria al cual se le ha asignado un nombre. Esto se puede ilustrar en el script siguiente. 
+
+\begin{verbatim}
+#!/bin/bash
+#EJ. Var1
+x="Hola Muchachos!"
+echo $x
+\end{verbatim}
+En la terminal 
+
+\begin{verbatim}
+Wolverine@ltsp41:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Hola Muchachos!
+
+\end{verbatim}
+
+Podemos notar, que no hizo falta darle un tipo a la variable para que esto funcionara. Sin embargo, se puede asignar valores a las variables de otras maneras, como usando el comando read para leer desde el teclado. 
+
+\begin{verbatim}
+
+#!/bin/bash
+#EJ. Var2
+x="Hola Muchachos!"
+echo $x
+echo Escribe tu nombre
+read k
+echo "Gusto en conocerte $k"
+
+\end{verbatim}
+
+Donde la termianl respondio
+
+\begin{verbatim}
+Wolverine@ltsp41:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Hola Muchachos!
+Escribe tu nombre
+Jose
+Gusto en conocerte Jose
+
+\end{verbatim}
+
+Notece que con el comando read asignamos un valor a k que despues desplegamos. 
+
+\subsection{5.}
+
+\subsection{6.escape Characters}
+
+Los caracteres de escape son formas de usar "" y / que dan diferetes resultados en echo. Por ejemplo.
+
+
+
+
+\begin{verbatim}
+#!/bin/bash
+#EJ. Esc1
+echo "Hola \"mundo\""
+\end{verbatim}
+
+A lo cual la terminal respondio
+
+\begin{verbatim}
+
+Wolverine@ltsp41:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Hola "mundo"
+
+\end{verbatim}
+Donde podemos notar que se escribio "mundo" en comillas.  
+
+Veamos que sucede si quitamos los backslashes.
+
+\begin{verbatim}
+#!/bin/bash
+#EJ. Esc2
+echo "Hola "mundo""
+
+\end{verbatim}
+
+Terminal
+\begin{verbatim}
+Wolverine@ltsp41:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Hola mundo
+\end{verbatim}
+
+Por lo que podesmos concluir que los backslashes son necesarios para escribir citas.
+
+\subsection{7. Loops}
+
+Los loops, no son otra cosa que repetidores de procesos. Para repetir un proceso solo hay que ponerlo entre un do y un done. Esto es extremadamente util para procesos de resolucion iterativos, o para procesar informacion en general.
+
+\begin{verbatim}
+#!/bin/sh
+#EJ. loop2
+for i in 1 2 3 4 5
+do
+  echo "Repitiendo ... number $i"
+done
+\end{verbatim}
+
+Terminal
+
+\begin{verbatim}
+
+Wolverine@ltsp41:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Repitiendo ... numero 1
+Repitiendo ... numero 2
+Repitiendo ... numero 3
+Repitiendo ... numero 4
+Repitiendo ... numero 5
+
+
+\end{verbatim}
+
+notese se dio la instruccion for previo al do. La instruccion for "variable" in "secuencia de numeros enteros" delata los valoires que tomara la variable en cada iteracion. Ahora bien, realizemos algo más complejo, un proceso que prosiga hasta que se cumpla una condicion. 
+
+\begin{verbatim}
+#!/bin/sh
+X=""
+while [ "$X" != "Adios" ]
+do
+  echo "Escribe cualquier cosa (Adios para salir)"
+  read X
+  echo "Escribiste: $X"
+done
+\end{verbatim}
+Terminal
+\begin{verbatim}
+Wolverine@ltsp41:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Escribe cualquier cosa (Adios para salir)
+hola
+Escribiste: hola
+Escribe cualquier cosa (Adios para salir)
+Elefante
+Escribiste: Elefante
+Escribe cualquier cosa (Adios para salir)
+Adios
+Escribiste: Adios
+\end{verbatim}
+
+Es de notarse la instruccion while, la cual pide que se cumpla cierta condicion para detener el loop.
+
+\subsection{8.Test}
+
+Test, aunque no siempre referido como tal, hace que los programas sean más confiable haciendo que shell interprete como test incluso si el hambiente no esta hecho asi.
+\linebreak
+Script
+
+\begin{verbatim}
+
+#!/bin/sh
+X=0
+while [ -n "$X" ]
+do
+  echo "Enter some text (RETURN to quit)"
+  read X
+  echo "You said: $X"
+done
+
+\end{verbatim}
+Terminal
+\begin{verbatim}
+
+Wolverine@ltsp32:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Enter some text (RETURN to quit)
+1
+You said: 1
+Enter some text (RETURN to quit)
+Return 
+You said: Return
+Enter some text (RETURN to quit)
+quit      
+You said: quit
+Enter some text (RETURN to quit)
+
+
+\end{verbatim}
+
+
+
+\subsection{9.Case}
+
+El comando case, te permite realizar diferentes acciones segun sea el caso, el cual se selecciona mediante una variable.
+
+
+
+\begin{verbatim}
+
+#!/bin/sh
+#EJ. Case1
+echo "Entretenme o declara tu debilidad diciendo\"Soy debil\" para irte. "
+while :
+do
+  read X
+  case $X in
+	Hola)
+		echo "Soy la inmortal computadora"
+		;;
+	"Soy debil")
+		echo "Adios mortal"
+		break
+		;;
+	*)
+		echo "Prosigue"
+		;;
+  esac
+done
+
+\end{verbatim}
+Terminal
+
+\begin{verbatim}
+
+Wolverine@ltsp41:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Entretenme o declara tu debilidad diciendo"Soy debil" para irte. 
+Hola
+Soy la inmortal computadora
+Me gusta la nieve
+Prosigue
+Soy debil
+Adios mortal
+
+\end{verbatim}
+
+Notese que dentro del do solo se lee la variable x una y otra vez y qe esta selleciiona el caso donde el caso * es simplemente un caso default para cuando no se cubren todas las opciones posibles. 
+
+\subsection{10.Variables II}
+
+Estas variables son variables ya existentes que pueden dar informacion util.
+\linebreak
+Script
+\begin{verbatim}
+#!/bin/sh
+echo "I was called with $# parameters"
+echo "My name is $0"
+echo "My first parameter is $1"
+echo "My second parameter is $2"
+echo "All parameters are $@"
+\end{verbatim}
+Terminal
+\begin{verbatim}
+Wolverine@ltsp32:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+I was called with 0 parameters
+My name is ./P1.sh
+My first parameter is 
+My second parameter is 
+All parameters are 
+
+\end{verbatim}
+Script
+\begin{verbatim}
+
+#!/bin/sh
+old_IFS="$IFS"
+IFS=:
+echo "Please input some data separated by colons ..."
+read x y z
+IFS=$old_IFS
+echo "x is $x y is $y z is $z"
+
+\end{verbatim}
+Terminal
+\begin{verbatim}
+Wolverine@ltsp32:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Please input some data separated by colons ...
+1;2
+x is 1;2 y is  z is 
+
+\end{verbatim}
+
+\subsection{11.Variables II}
+
+Script
+\begin{verbatim}
+
+echo -en "What is your name [ `whoami` ] "
+read myname
+if [ -z "$myname" ]; then
+  myname=`whoami`
+fi
+echo "Your name is : $myname"
+
+\end{verbatim}
+Terminal
+\begin{verbatim}
+
+Wolverine@ltsp32:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+What is your name [ Wolverine ] Wolverine
+Your name is : Wolverine
+
+
+\end{verbatim}
+
+
+
+\begin{verbatim}
+
+
+
+\end{verbatim}
+
+\subsection{12.External Programs}
+
+Script
+
+\begin{verbatim}
+
+#!/bin/sh
+HTML_FILES=`find / -name "*.html" -print`
+echo "$HTML_FILES" | grep "/index.html$"
+echo "$HTML_FILES" | grep "/contents.html$"
+
+\end{verbatim}
+
+Terminal
+
+\begin{verbatim}
+Wolverine@ltsp32:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+find: ‘/etc/chatscripts’: Permiso denegado
+find: ‘/etc/cups/ssl’: Permiso denegado
+find: ‘/etc/polkit-1/localauthority’: Permiso denegado
+find: ‘/etc/ppp/peers’: Permiso denegado
+find: ‘/etc/ssl/private’: Permiso denegado
+
+
+\end{verbatim}
+
+\subsection{13.Funciones}
+Las funciones, te permiten tener codigo que realiza acciones espesificas y usarlas en diferentes scripts. Estos es conveniente colocarlos en una biblioteca y usarla al realizar un script.
+
+Script
+
+\begin{verbatim}
+#!/bin/sh
+
+factorial()
+{
+  if [ "$1" -gt "1" ]; then
+    i=`expr $1 - 1`
+    j=`factorial $i`
+    k=`expr $1 \* $j`
+    echo $k
+  else
+    echo 1
+  fi
+}
+
+
+while :
+do
+  echo "Enter a number:"
+  read x
+  factorial $x
+done   
+
+\end{verbatim}
+Termianl
+\begin{verbatim}
+
+Wolverine@ltsp42:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+Enter a number:
+2
+2
+Enter a number:
+5
+120
+Enter a number:
+3
+6
+Enter a number:
+1
+1
+
+
+\end{verbatim}
+
+script
+\begin{verbatim}
+#!/bin/sh
+
+myfunc()
+{
+  echo "\$1 is $1"
+  echo "\$2 is $2"
+  # cannot change $1 - we'd have to say:
+  # 1="Goodbye Cruel"
+  # which is not a valid syntax. However, we can
+  # change $a:
+  a="Goodbye Cruel"
+}
+
+### Main script starts here 
+
+a=Hello
+b=World
+myfunc $a $b
+echo "a is $a"
+echo "b is $b"
+
+
+\end{verbatim}
+Terminal
+\begin{verbatim}
+
+Wolverine@ltsp48:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+$1 is Hello
+$2 is World
+a is Goodbye Cruel
+b is World
+
+
+\end{verbatim}
+
+\subsection{14.Pistas}
+
+
+Script
+\begin{verbatim}
+
+
+#!/bin/sh
+steves=`grep -i steve /etc/passwd | cut -d: -f1`
+echo "All users with the word \"steve\" in their passwd"
+echo "Entries are: $steves"
+\end{verbatim}
+Terminal
+\begin{verbatim}
+
+Wolverine@ltsp48:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+All users with the word "steve" in their passwd
+Entries are: 
+Wolverine@l
+
+\end{verbatim}
+Script
+\begin{verbatim}
+
+#!/bin/sh
+host=127.0.0.1
+port=23
+login=steve
+passwd=hellothere
+cmd="ls /tmp"
+
+echo open ${host} ${port}
+sleep 1
+echo ${login}
+sleep 1
+echo ${passwd}
+sleep 1
+echo ${cmd}
+sleep 1
+echo exit
+
+\end{verbatim}
+
+Terminal
+\begin{verbatim}
+
+Wolverine@ltsp48:~/Fisica Computacional/ActividadIV/Shell Script Tutorial$ ./P1.sh
+open 127.0.0.1 23
+steve
+hellothere
+ls /tmp
+exit
+
+\end{verbatim}
+
+
+\subsection{15.Referencias rapidas.}
+
+Estos son codigos y comandos utiles y poco conocidos de shell.
+
+\begin{verbatim}
+&&	Logical AND
+
+$	End of line
+
+-eq	Numeric Equality
+
+-ne	Numeric Inqualit
+
+-lt	Less Than
+
+-le	Less Than or Equal
+
+-gt	Greater Than
+
+
+\end{verbatim}
+
+
+
+\begin{verbatim}
+\end{verbatim}
+
+\begin{verbatim}
+\end{verbatim}
+
+
+\section{Apendice}
+
+
+¿Qué fue lo que más te llamó la atención en esta actividad?
+
+Fue interesante como se puede transformar y mover informacion desde la terminal, ademas de lo parecido que es usar scripts y fortran en ciertos aspectos.
+
+¿Qué consideras que aprendiste?
+    
+  
+  
+Que los scripts detectan el uso de mayusculas, que es posible automatizar procesos compltos e incluso entrar a otras plataformas para esto. 
+    
+   
+¿Cuáles fueron las cosas que más se te dificultaron?
+    
+      
+Entender que era lo que sucedia con cada instruccion. 
+ 
+    
+¿Cómo se podría mejorar en esta actividad?
+    
+    
+Dando unas cuantas clases de introduccion.
+   
+    
+¿En general, cómo te sentiste al realizar en esta actividad? 
+    
+     
+    
+    Considero que lo hice de forma fatal y me hubiese servido mucho unas clases de introduccion. 
+    
+
+
+\bibliography{sample}
+
+\end{document}
